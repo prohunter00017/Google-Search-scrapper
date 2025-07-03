@@ -132,7 +132,7 @@ export function ConfigurationPanel({ onStartAnalysis }: ConfigurationPanelProps)
                 />
               </div>
               <p className="text-xs text-blue-600 mt-2">
-                Need help? Get your API key from <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" className="underline">Google Cloud Console</a> and CSE ID from <a href="https://cse.google.com/cse/" target=\"_blank" rel="noopener noreferrer\" className="underline">Custom Search Engine</a>
+                Need help? Get your API key from <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" className="underline">Google Cloud Console</a> and CSE ID from <a href="https://cse.google.com/cse/" target="_blank" rel="noopener noreferrer" className="underline">Custom Search Engine</a>
               </p>
             </div>
 
