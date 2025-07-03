@@ -56,6 +56,8 @@ export interface AnalysisConfig {
   entityExtraction: boolean;
   sentimentAnalysis: boolean;
   imageAnalysis: boolean;
+  googleApiKey: string;
+  googleCseId: string;
 }
 
 export interface EntityData {

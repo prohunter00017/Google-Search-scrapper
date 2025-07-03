@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Settings, Play, Info } from "lucide-react";
+import { Settings, Play, Info, Key } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,6 +21,8 @@ const configSchema = z.object({
   entityExtraction: z.boolean().default(true),
   sentimentAnalysis: z.boolean().default(true),
   imageAnalysis: z.boolean().default(false),
+  googleApiKey: z.string().min(1, "Google API Key is required"),
+  googleCseId: z.string().min(1, "Google Custom Search ID is required"),
 });
 
 type ConfigFormData = z.infer<typeof configSchema>;
@@ -42,6 +44,8 @@ export function ConfigurationPanel({ onStartAnalysis }: ConfigurationPanelProps)
       entityExtraction: true,
       sentimentAnalysis: true,
       imageAnalysis: false,
+      googleApiKey: "",
+      googleCseId: "",
     },
   });
 
@@ -85,6 +89,53 @@ export function ConfigurationPanel({ onStartAnalysis }: ConfigurationPanelProps)
       <CardContent className="p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Google API Configuration */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <div className="flex items-center mb-3">
+                <Key className="text-blue-600 mr-2" size={18} />
+                <h3 className="text-sm font-semibold text-blue-800">Google API Configuration</h3>
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="googleApiKey"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium text-blue-700">Google API Key</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="password"
+                          placeholder="Enter your Google API Key" 
+                          {...field}
+                          className="border-blue-300 focus:border-blue-500"
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="googleCseId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium text-blue-700">Custom Search Engine ID</FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="Enter your Google CSE ID" 
+                          {...field}
+                          className="border-blue-300 focus:border-blue-500"
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <p className="text-xs text-blue-600 mt-2">
+                Need help? Get your API key from <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" className="underline">Google Cloud Console</a> and CSE ID from <a href="https://cse.google.com/cse/" target="_blank" rel="noopener noreferrer" className="underline">Custom Search Engine</a>
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Keyword Input */}
               <div className="lg:col-span-1">

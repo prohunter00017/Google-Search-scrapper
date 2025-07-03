@@ -30,6 +30,8 @@ export class AnalysisService {
       console.log(`Starting Google search for: ${config.keyword}`);
       const searchResults = await googleApisService.searchGoogle(
         config.keyword,
+        config.googleApiKey,
+        config.googleCseId,
         config.country,
         config.language
       );
@@ -60,7 +62,7 @@ export class AnalysisService {
         let entities: EntityData[] = [];
         if (config.entityExtraction && scraped.content) {
           try {
-            entities = await googleApisService.analyzeEntities(scraped.content);
+            entities = await googleApisService.analyzeEntities(scraped.content, config.googleApiKey);
           } catch (error) {
             console.warn(`Entity extraction failed for ${searchResult.link}:`, error);
           }
@@ -70,7 +72,7 @@ export class AnalysisService {
         let sentiment: SentimentData | null = null;
         if (config.sentimentAnalysis && scraped.content) {
           try {
-            sentiment = await googleApisService.analyzeSentiment(scraped.content);
+            sentiment = await googleApisService.analyzeSentiment(scraped.content, config.googleApiKey);
           } catch (error) {
             console.warn(`Sentiment analysis failed for ${searchResult.link}:`, error);
           }

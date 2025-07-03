@@ -356,7 +356,7 @@ function generateHtmlReport(results: AnalysisResults): string {
                                     <h4>Styled Content Elements</h4>
                                     ${competitor.styledElements.emphasis && competitor.styledElements.emphasis.length > 0 ? `
                                         <div class="styled-group">
-                                            <div class="styled-group-title">Emphasis (&lt;em&gt;) - ${competitor.styledElements.emphasis.length} found</div>
+                                            <div class="styled-group-title">Emphasis (<em>) - ${competitor.styledElements.emphasis.length} found</div>
                                             <div class="styled-items">
                                                 ${competitor.styledElements.emphasis.slice(0, 10).map((item: any) => `
                                                     <span class="styled-item emphasis" title="${item.text}">${item.text}</span>
@@ -367,7 +367,7 @@ function generateHtmlReport(results: AnalysisResults): string {
                                     ` : ''}
                                     ${competitor.styledElements.strong && competitor.styledElements.strong.length > 0 ? `
                                         <div class="styled-group">
-                                            <div class="styled-group-title">Strong (&lt;strong&gt;) - ${competitor.styledElements.strong.length} found</div>
+                                            <div class="styled-group-title">Strong (<strong>) - ${competitor.styledElements.strong.length} found</div>
                                             <div class="styled-items">
                                                 ${competitor.styledElements.strong.slice(0, 10).map((item: any) => `
                                                     <span class="styled-item strong" title="${item.text}">${item.text}</span>
@@ -378,7 +378,7 @@ function generateHtmlReport(results: AnalysisResults): string {
                                     ` : ''}
                                     ${competitor.styledElements.italic && competitor.styledElements.italic.length > 0 ? `
                                         <div class="styled-group">
-                                            <div class="styled-group-title">Italic (&lt;i&gt;) - ${competitor.styledElements.italic.length} found</div>
+                                            <div class="styled-group-title">Italic (<i>) - ${competitor.styledElements.italic.length} found</div>
                                             <div class="styled-items">
                                                 ${competitor.styledElements.italic.slice(0, 10).map((item: any) => `
                                                     <span class="styled-item italic" title="${item.text}">${item.text}</span>
@@ -418,7 +418,7 @@ function generateHtmlReport(results: AnalysisResults): string {
                                         <div class="content-stat-label">Words</div>
                                     </div>
                                 </div>
-                                <div class="content-preview">${competitor.fullContent ? competitor.fullContent.replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'No content available'}</div>
+                                <div class="content-preview">${competitor.fullContent ? competitor.fullContent.replace(/</g, '<').replace(/>/g, '>') : 'No content available'}</div>
                             </div>
                         </div>
                     </div>
@@ -459,6 +459,8 @@ const analysisConfigSchema = insertAnalysisSchema.extend({
   entityExtraction: z.boolean().default(true),
   sentimentAnalysis: z.boolean().default(true),
   imageAnalysis: z.boolean().default(false),
+  googleApiKey: z.string().min(1, "Google API Key is required"),
+  googleCseId: z.string().min(1, "Google Custom Search ID is required"),
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {

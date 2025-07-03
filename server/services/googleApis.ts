@@ -1,8 +1,5 @@
 import { EntityData, SentimentData } from "@shared/schema";
 
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || process.env.GOOGLE_CLOUD_API_KEY || "";
-const GOOGLE_CSE_ID = process.env.GOOGLE_CSE_ID || process.env.CUSTOM_SEARCH_ENGINE_ID || "";
-
 interface GoogleSearchResult {
   title: string;
   link: string;
@@ -46,26 +43,18 @@ interface GoogleSentimentResponse {
 }
 
 export class GoogleApisService {
-  private apiKey: string;
-  private cseId: string;
-
-  constructor() {
-    this.apiKey = GOOGLE_API_KEY;
-    this.cseId = GOOGLE_CSE_ID;
-    
-    if (!this.apiKey) {
-      throw new Error("Google API Key is required. Set GOOGLE_API_KEY or GOOGLE_CLOUD_API_KEY environment variable.");
+  async searchGoogle(query: string, apiKey: string, cseId: string, country: string = "US", language: string = "en"): Promise<GoogleSearchResult[]> {
+    if (!apiKey) {
+      throw new Error("Google API Key is required");
     }
     
-    if (!this.cseId) {
-      throw new Error("Google Custom Search Engine ID is required. Set GOOGLE_CSE_ID or CUSTOM_SEARCH_ENGINE_ID environment variable.");
+    if (!cseId) {
+      throw new Error("Google Custom Search Engine ID is required");
     }
-  }
 
-  async searchGoogle(query: string, country: string = "US", language: string = "en"): Promise<GoogleSearchResult[]> {
     const params = new URLSearchParams({
-      key: this.apiKey,
-      cx: this.cseId,
+      key: apiKey,
+      cx: cseId,
       q: query,
       cr: `country${country}`,
       hl: language,
@@ -91,8 +80,12 @@ export class GoogleApisService {
     }
   }
 
-  async analyzeEntities(text: string): Promise<EntityData[]> {
-    const url = `https://language.googleapis.com/v1/documents:analyzeEntities?key=${this.apiKey}`;
+  async analyzeEntities(text: string, apiKey: string): Promise<EntityData[]> {
+    if (!apiKey) {
+      throw new Error("Google API Key is required");
+    }
+
+    const url = `https://language.googleapis.com/v1/documents:analyzeEntities?key=${apiKey}`;
     
     const requestBody = {
       document: {
@@ -129,8 +122,12 @@ export class GoogleApisService {
     }
   }
 
-  async analyzeSentiment(text: string): Promise<SentimentData> {
-    const url = `https://language.googleapis.com/v1/documents:analyzeSentiment?key=${this.apiKey}`;
+  async analyzeSentiment(text: string, apiKey: string): Promise<SentimentData> {
+    if (!apiKey) {
+      throw new Error("Google API Key is required");
+    }
+
+    const url = `https://language.googleapis.com/v1/documents:analyzeSentiment?key=${apiKey}`;
     
     const requestBody = {
       document: {
