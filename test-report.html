@@ -1,0 +1,1248 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Competitor Analysis Report - space waves</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #f8fafc;
+            padding: 20px;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; 
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .summary { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+            padding: 30px;
+            background: #f8fafc;
+        }
+        .summary-card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 8px; 
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .summary-card h3 { color: #4a5568; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .summary-card .value { font-size: 2rem; font-weight: bold; color: #2d3748; }
+        .content { padding: 30px; }
+        .section { margin-bottom: 40px; }
+        .section h2 { 
+            color: #2d3748; 
+            margin-bottom: 20px; 
+            padding-bottom: 10px; 
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 1.5rem;
+        }
+        .competitor { 
+            border: 1px solid #e2e8f0; 
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            overflow: hidden;
+        }
+        .competitor-header { 
+            background: #f7fafc; 
+            padding: 20px; 
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .rank { 
+            display: inline-block; 
+            background: #667eea; 
+            color: white; 
+            width: 24px; 
+            height: 24px; 
+            border-radius: 50%; 
+            text-align: center; 
+            line-height: 24px; 
+            font-size: 0.9rem; 
+            font-weight: bold; 
+            margin-right: 10px;
+        }
+        .rank.first { background: #48bb78; }
+        .competitor-title { font-size: 1.1rem; font-weight: 600; color: #2d3748; }
+        .competitor-domain { font-size: 0.9rem; color: #718096; margin-top: 5px; }
+        .competitor-content { padding: 20px; }
+        .metrics { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+            gap: 15px; 
+            margin-bottom: 25px;
+        }
+        .metric { text-align: center; }
+        .metric-value { font-size: 1.3rem; font-weight: bold; color: #2d3748; }
+        .metric-label { font-size: 0.8rem; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; }
+        .meta-info { 
+            background: #f7fafc; 
+            padding: 15px; 
+            border-radius: 6px; 
+            margin-bottom: 20px;
+        }
+        .meta-info h4 { color: #4a5568; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; }
+        .meta-value { color: #2d3748; margin-bottom: 8px; }
+        .meta-length { font-size: 0.8rem; color: #718096; }
+        .headings { 
+            background: #f7fafc; 
+            padding: 15px; 
+            border-radius: 6px;
+        }
+        .headings h4 { color: #4a5568; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; }
+        .heading { 
+            margin-bottom: 8px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        .heading-tag { 
+            background: #667eea; 
+            color: white; 
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            font-size: 0.7rem; 
+            font-weight: bold; 
+            min-width: 30px; 
+            text-align: center;
+        }
+        .heading-tag.h1 { background: #48bb78; }
+        .heading-tag.h2 { background: #4299e1; }
+        .heading-tag.h3 { background: #9f7aea; }
+        .heading-tag.h4 { background: #f6ad55; }
+        .heading-text { color: #4a5568; }
+        .entities { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 8px; 
+            margin-top: 15px;
+        }
+        .entity { 
+            background: #e6fffa; 
+            color: #234e52; 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 0.8rem; 
+            border: 1px solid #b2f5ea;
+        }
+        .styled-elements { 
+            background: #f7fafc; 
+            padding: 15px; 
+            border-radius: 6px; 
+            margin-bottom: 20px;
+        }
+        .styled-elements h4 { color: #4a5568; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; }
+        .styled-group { margin-bottom: 15px; }
+        .styled-group-title { 
+            font-size: 0.8rem; 
+            font-weight: 600; 
+            color: #4a5568; 
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .styled-items { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 6px;
+        }
+        .styled-item { 
+            background: white; 
+            padding: 4px 10px; 
+            border-radius: 4px; 
+            font-size: 0.8rem; 
+            border: 1px solid #e2e8f0;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .styled-item.emphasis { border-color: #f6ad55; background: #fffaf0; color: #c05621; }
+        .styled-item.strong { border-color: #4299e1; background: #ebf8ff; color: #2b6cb0; }
+        .styled-item.italic { border-color: #9f7aea; background: #faf5ff; color: #6b46c1; }
+        .recommendations { 
+            background: #f7fafc; 
+            padding: 25px; 
+            border-radius: 8px; 
+            margin-top: 30px;
+        }
+        .recommendations h3 { color: #2d3748; margin-bottom: 15px; }
+        .recommendation { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 6px; 
+            margin-bottom: 10px; 
+            border-left: 4px solid #667eea;
+        }
+        .footer { 
+            text-align: center; 
+            padding: 30px; 
+            color: #718096; 
+            background: #f7fafc; 
+            border-top: 1px solid #e2e8f0;
+        }
+        @media print {
+            body { padding: 0; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SEO Competitor Analysis Report</h1>
+            <p>Keyword: "space waves" | Country: US | Language: en</p>
+            <p>Generated on 7/3/2025</p>
+        </div>
+
+        <div class="summary">
+            <div class="summary-card">
+                <h3>Average Word Count</h3>
+                <div class="value">1,435</div>
+            </div>
+            <div class="summary-card">
+                <h3>Average Title Length</h3>
+                <div class="value">36</div>
+            </div>
+            <div class="summary-card">
+                <h3>Common Entities</h3>
+                <div class="value">10</div>
+            </div>
+            <div class="summary-card">
+                <h3>Pages Analyzed</h3>
+                <div class="value">8</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>Top 10 Competitor Analysis</h2>
+                
+                    <div class="competitor">
+                        <div class="competitor-header">
+                            <span class="rank first">1</span>
+                            <div class="competitor-title">Space Waves</div>
+                            <div class="competitor-domain">spacewaves.io</div>
+                        </div>
+                        <div class="competitor-content">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <div class="metric-value">755</div>
+                                    <div class="metric-label">Words</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">11</div>
+                                    <div class="metric-label">Title Length</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">168</div>
+                                    <div class="metric-label">Entities</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">12</div>
+                                    <div class="metric-label">Headings</div>
+                                </div>
+                            </div>
+
+                            <div class="meta-info">
+                                <h4>SEO Meta Information</h4>
+                                <div class="meta-value">
+                                    <strong>Title:</strong> Space Waves
+                                    <div class="meta-length">11 characters</div>
+                                </div>
+                                <div class="meta-value">
+                                    <strong>Meta Description:</strong> Space Waves is an exciting side-scrolling game that combines fast-paced action and challenges. Control an arrow to fly through space tunnels full of obstacles.
+                                    <div class="meta-length">159 characters</div>
+                                </div>
+                            </div>
+
+                            
+                                <div class="headings">
+                                    <h4>Heading Structure</h4>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h1">H1</span>
+                                            <span class="heading-text">Space Waves</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">About Space Waves</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">How to play</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">What is your goal?</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Countless obstacles</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Level of difficult</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Enemy spaceship</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">How to control</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Game modes</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">World Mode 1</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Endless Mode</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Tips and strategies to play Space Waves</span>
+                                        </div>
+                                    
+                                </div>
+                            
+
+                            
+
+                            
+                                <div class="entities">
+                                    
+                                        <span class="entity">Rail Slide Car Stunt King MineFun.io</span>
+                                    
+                                        <span class="entity">King MineFun.io Advertisement Slope Game Geometry Dash Lite Geometry Dash Wave Geometry Vibes Snowball Racing Flappy Bird Slope Game Geometry Dash Lite Geometry Dash Wave Geometry Vibes Snowball Racing Flappy Bird Advertisement</span>
+                                    
+                                        <span class="entity">Games</span>
+                                    
+                                        <span class="entity">Space Waves Hot Games</span>
+                                    
+                                        <span class="entity">challenges</span>
+                                    
+                                        <span class="entity">Space WavesSpace Waves</span>
+                                    
+                                        <span class="entity">votes</span>
+                                    
+                                        <span class="entity">arrow</span>
+                                    
+                                        <span class="entity">World Mode 1</span>
+                                    
+                                        <span class="entity">game</span>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                
+                    <div class="competitor">
+                        <div class="competitor-header">
+                            <span class="rank ">2</span>
+                            <div class="competitor-title">Space Waves 🕹️ Play on CrazyGames</div>
+                            <div class="competitor-domain">crazygames.com</div>
+                        </div>
+                        <div class="competitor-content">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <div class="metric-value">308</div>
+                                    <div class="metric-label">Words</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">34</div>
+                                    <div class="metric-label">Title Length</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">89</div>
+                                    <div class="metric-label">Entities</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">11</div>
+                                    <div class="metric-label">Headings</div>
+                                </div>
+                            </div>
+
+                            <div class="meta-info">
+                                <h4>SEO Meta Information</h4>
+                                <div class="meta-value">
+                                    <strong>Title:</strong> Space Waves 🕹️ Play on CrazyGames
+                                    <div class="meta-length">34 characters</div>
+                                </div>
+                                <div class="meta-value">
+                                    <strong>Meta Description:</strong> Space Waves is an arcade game where you need to control an arrow to avoid obstacles until you get to the end. There are 33 levels to the game, and you can choose any level you want to play at any time. All levels vary in difficulty and are labeled accordingly with faces; this way you get to decide how courageous you want to be.
+                                    <div class="meta-length">329 characters</div>
+                                </div>
+                            </div>
+
+                            
+                                <div class="headings">
+                                    <h4>Heading Structure</h4>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h1">H1</span>
+                                            <span class="heading-text">Space Waves</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">How to Play Space Waves</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Tips and Tricks</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">More Games Like This</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Release Date</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Platform</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Last Updated</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Controls</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">PC Controls</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Mobile Controls</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Gameplay Video</span>
+                                        </div>
+                                    
+                                </div>
+                            
+
+                            
+
+                            
+                                <div class="entities">
+                                    
+                                        <span class="entity">Space Waves</span>
+                                    
+                                        <span class="entity">Casual1</span>
+                                    
+                                        <span class="entity">arcade game</span>
+                                    
+                                        <span class="entity">level</span>
+                                    
+                                        <span class="entity">desktop</span>
+                                    
+                                        <span class="entity">Browser</span>
+                                    
+                                        <span class="entity">Platform</span>
+                                    
+                                        <span class="entity">votes</span>
+                                    
+                                        <span class="entity">gamesRating</span>
+                                    
+                                        <span class="entity">AvoidSpace WavesShareEmbedDeveloper</span>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                
+                    <div class="competitor">
+                        <div class="competitor-header">
+                            <span class="rank ">3</span>
+                            <div class="competitor-title">Space Waves</div>
+                            <div class="competitor-domain">space-waves.co</div>
+                        </div>
+                        <div class="competitor-content">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <div class="metric-value">1,126</div>
+                                    <div class="metric-label">Words</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">11</div>
+                                    <div class="metric-label">Title Length</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">261</div>
+                                    <div class="metric-label">Entities</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">16</div>
+                                    <div class="metric-label">Headings</div>
+                                </div>
+                            </div>
+
+                            <div class="meta-info">
+                                <h4>SEO Meta Information</h4>
+                                <div class="meta-value">
+                                    <strong>Title:</strong> Space Waves
+                                    <div class="meta-length">11 characters</div>
+                                </div>
+                                <div class="meta-value">
+                                    <strong>Meta Description:</strong> Ride a spacecraft of Space Waves and timing movements perfectly to avoid crashes. Can you master the art of platform surfing with the hardest gameplay?
+                                    <div class="meta-length">151 characters</div>
+                                </div>
+                            </div>
+
+                            
+                                <div class="headings">
+                                    <h4>Heading Structure</h4>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h1">H1</span>
+                                            <span class="heading-text">Space Waves</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Welcome to the Divine Surfing World of Space Waves!</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Are You Suitable for This Challenge?</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Discover Signature-and-Distinctive Gameplay</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Core Gameplay</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Surfing with the Wave</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">A Variety of Stunning Game Modes</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Classic Mode</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Endless Mode</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Race Mode</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Highlights of the Game’s Features</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Outstanding Background Elements</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Charming Shopping Collections</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Unlock Achievements and Rewards</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Check out more Adventures with Geometry Dash Wave!</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">You might also like</span>
+                                        </div>
+                                    
+                                </div>
+                            
+
+                            
+                                <div class="styled-elements">
+                                    <h4>Styled Content Elements</h4>
+                                    
+                                    
+                                        <div class="styled-group">
+                                            <div class="styled-group-title">Strong (&lt;strong&gt;) - 21 found</div>
+                                            <div class="styled-items">
+                                                
+                                                    <span class="styled-item strong" title="Welcome to the Divine Surfing World of Space Waves!">Welcome to the Divine Surfing World of Space Waves!</span>
+                                                
+                                                    <span class="styled-item strong" title="Are You Suitable for This Challenge?">Are You Suitable for This Challenge?</span>
+                                                
+                                                    <span class="styled-item strong" title="Discover Signature-and-Distinctive Gameplay">Discover Signature-and-Distinctive Gameplay</span>
+                                                
+                                                    <span class="styled-item strong" title="Core Gameplay">Core Gameplay</span>
+                                                
+                                                    <span class="styled-item strong" title="Surfing with the Wave">Surfing with the Wave</span>
+                                                
+                                                    <span class="styled-item strong" title="Wave Gameplay’s Characteristics:">Wave Gameplay’s Characteristics:</span>
+                                                
+                                                    <span class="styled-item strong" title="How to Move:">How to Move:</span>
+                                                
+                                                    <span class="styled-item strong" title="Command Keys:">Command Keys:</span>
+                                                
+                                                    <span class="styled-item strong" title="A Variety of Stunning Game Modes">A Variety of Stunning Game Modes</span>
+                                                
+                                                    <span class="styled-item strong" title="Classic Mode">Classic Mode</span>
+                                                
+                                                <span class="styled-item">... +11 more</span>
+                                            </div>
+                                        </div>
+                                    
+                                    
+                                </div>
+                            
+
+                            
+                                <div class="entities">
+                                    
+                                        <span class="entity">Space Waves</span>
+                                    
+                                        <span class="entity">journey</span>
+                                    
+                                        <span class="entity">Space</span>
+                                    
+                                        <span class="entity">spacecraft</span>
+                                    
+                                        <span class="entity">platformer game</span>
+                                    
+                                        <span class="entity">challenge</span>
+                                    
+                                        <span class="entity">seasickness</span>
+                                    
+                                        <span class="entity">waves</span>
+                                    
+                                        <span class="entity">movements</span>
+                                    
+                                        <span class="entity">waves</span>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                
+                    <div class="competitor">
+                        <div class="competitor-header">
+                            <span class="rank ">4</span>
+                            <div class="competitor-title">MSN</div>
+                            <div class="competitor-domain">msn.com</div>
+                        </div>
+                        <div class="competitor-content">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <div class="metric-value">0</div>
+                                    <div class="metric-label">Words</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">3</div>
+                                    <div class="metric-label">Title Length</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">0</div>
+                                    <div class="metric-label">Entities</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">0</div>
+                                    <div class="metric-label">Headings</div>
+                                </div>
+                            </div>
+
+                            <div class="meta-info">
+                                <h4>SEO Meta Information</h4>
+                                <div class="meta-value">
+                                    <strong>Title:</strong> MSN
+                                    <div class="meta-length">3 characters</div>
+                                </div>
+                                <div class="meta-value">
+                                    <strong>Meta Description:</strong> Space Waves is an arcade game where you need to control an arrow to avoid obstacles until you get to the end. There are 33 levels to the game, ...
+                                    <div class="meta-length">146 characters</div>
+                                </div>
+                            </div>
+
+                            
+
+                            
+
+                            
+                        </div>
+                    </div>
+                
+                    <div class="competitor">
+                        <div class="competitor-header">
+                            <span class="rank ">5</span>
+                            <div class="competitor-title">Space Waves - Dodge Waves, Win Big | Play now!</div>
+                            <div class="competitor-domain">spacewavesgame.io</div>
+                        </div>
+                        <div class="competitor-content">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <div class="metric-value">1,162</div>
+                                    <div class="metric-label">Words</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">46</div>
+                                    <div class="metric-label">Title Length</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">264</div>
+                                    <div class="metric-label">Entities</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">10</div>
+                                    <div class="metric-label">Headings</div>
+                                </div>
+                            </div>
+
+                            <div class="meta-info">
+                                <h4>SEO Meta Information</h4>
+                                <div class="meta-value">
+                                    <strong>Title:</strong> Space Waves - Dodge Waves, Win Big | Play now!
+                                    <div class="meta-length">46 characters</div>
+                                </div>
+                                <div class="meta-value">
+                                    <strong>Meta Description:</strong> Conquer fast-paced levels in Space Waves, dodge obstacles, and ride the cosmic wave in this arcade game. Ready to conquer the perilous tunnels now!
+                                    <div class="meta-length">147 characters</div>
+                                </div>
+                            </div>
+
+                            
+                                <div class="headings">
+                                    <h4>Heading Structure</h4>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h1">H1</span>
+                                            <span class="heading-text">Space Waves</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h4">H4</span>
+                                            <span class="heading-text">Hot Games</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">BLAST OFF WITH SPACE WAVES FUN</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Explore Features of Space Waves</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">How to Surf Space Waves Like a Pro</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Start Your Arcade Adventure</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h3">H3</span>
+                                            <span class="heading-text">Experience Cool Modes in Space Waves</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Tricks to Score Big in Space Waves</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Other Games to Keep the Vibe Alive</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h4">H4</span>
+                                            <span class="heading-text">New Games</span>
+                                        </div>
+                                    
+                                </div>
+                            
+
+                            
+                                <div class="styled-elements">
+                                    <h4>Styled Content Elements</h4>
+                                    
+                                        <div class="styled-group">
+                                            <div class="styled-group-title">Emphasis (&lt;em&gt;) - 1 found</div>
+                                            <div class="styled-items">
+                                                
+                                                    <span class="styled-item emphasis" title="Space Waves Gameplay Walkthrough">Space Waves Gameplay Walkthrough</span>
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                    
+                                        <div class="styled-group">
+                                            <div class="styled-group-title">Strong (&lt;strong&gt;) - 26 found</div>
+                                            <div class="styled-items">
+                                                
+                                                    <span class="styled-item strong" title="BLAST OFF WITH SPACE WAVES FUN">BLAST OFF WITH SPACE WAVES FUN</span>
+                                                
+                                                    <span class="styled-item strong" title="Space Waves">Space Waves</span>
+                                                
+                                                    <span class="styled-item strong" title="Appealing Graphics and Sounds:">Appealing Graphics and Sounds:</span>
+                                                
+                                                    <span class="styled-item strong" title="Dynamic Levels Design:">Dynamic Levels Design:</span>
+                                                
+                                                    <span class="styled-item strong" title="Effective Power-Ups:">Effective Power-Ups:</span>
+                                                
+                                                    <span class="styled-item strong" title="Customization Options:">Customization Options:</span>
+                                                
+                                                    <span class="styled-item strong" title="Practice Mode:">Practice Mode:</span>
+                                                
+                                                    <span class="styled-item strong" title="Start Your Arcade Adventure">Start Your Arcade Adventure</span>
+                                                
+                                                    <span class="styled-item strong" title="Pick Your Level:">Pick Your Level:</span>
+                                                
+                                                    <span class="styled-item strong" title="Your Big Goals:">Your Big Goals:</span>
+                                                
+                                                <span class="styled-item">... +16 more</span>
+                                            </div>
+                                        </div>
+                                    
+                                    
+                                </div>
+                            
+
+                            
+                                <div class="entities">
+                                    
+                                        <span class="entity">Players</span>
+                                    
+                                        <span class="entity">Space Waves New Games Go to New Games Hot Games Go to Hot Games</span>
+                                    
+                                        <span class="entity">ClickerSpeed StarsAmong DashFireboy</span>
+                                    
+                                        <span class="entity">player</span>
+                                    
+                                        <span class="entity">Geometry DashWordleRed</span>
+                                    
+                                        <span class="entity">game</span>
+                                    
+                                        <span class="entity">arcade game</span>
+                                    
+                                        <span class="entity">choice</span>
+                                    
+                                        <span class="entity">bugFull ScreenHot GamesView moreNoob</span>
+                                    
+                                        <span class="entity">anyone</span>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                
+                    <div class="competitor">
+                        <div class="competitor-header">
+                            <span class="rank ">6</span>
+                            <div class="competitor-title">Installer button disabled - no space but loads of space available - Support - Waves Community Forum</div>
+                            <div class="competitor-domain">forum.waves.com</div>
+                        </div>
+                        <div class="competitor-content">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <div class="metric-value">3,376</div>
+                                    <div class="metric-label">Words</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">99</div>
+                                    <div class="metric-label">Title Length</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">1468</div>
+                                    <div class="metric-label">Entities</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">0</div>
+                                    <div class="metric-label">Headings</div>
+                                </div>
+                            </div>
+
+                            <div class="meta-info">
+                                <h4>SEO Meta Information</h4>
+                                <div class="meta-value">
+                                    <strong>Title:</strong> Installer button disabled - no space but loads of space available - Support - Waves Community Forum
+                                    <div class="meta-length">99 characters</div>
+                                </div>
+                                <div class="meta-value">
+                                    <strong>Meta Description:</strong> I cannot install Waves plugins as the installer button is disabled and I cannot get it to enable. It say there is no space but there is lots of space available. 
+I have tried uninstalling, reinstalling, tried the offline&hellip;
+                                    <div class="meta-length">228 characters</div>
+                                </div>
+                            </div>
+
+                            
+
+                            
+
+                            
+                                <div class="entities">
+                                    
+                                        <span class="entity">itemprop</span>
+                                    
+                                        <span class="entity">crawler-post</span>
+                                    
+                                        <span class="entity">crawler-post-infos</span>
+                                    
+                                        <span class="entity">itemscope itemtype</span>
+                                    
+                                        <span class="entity">post-likes</span>
+                                    
+                                        <span class="entity">itemscope itemtype</span>
+                                    
+                                        <span class="entity">content</span>
+                                    
+                                        <span class="entity">content</span>
+                                    
+                                        <span class="entity">badge-category</span>
+                                    
+                                        <span class="entity">itemscope itemtype</span>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                
+                    <div class="competitor">
+                        <div class="competitor-header">
+                            <span class="rank ">9</span>
+                            <div class="competitor-title">Space Waves Batch 2</div>
+                            <div class="competitor-domain">jesterkingbrewery.com</div>
+                        </div>
+                        <div class="competitor-content">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <div class="metric-value">248</div>
+                                    <div class="metric-label">Words</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">19</div>
+                                    <div class="metric-label">Title Length</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">78</div>
+                                    <div class="metric-label">Entities</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">1</div>
+                                    <div class="metric-label">Headings</div>
+                                </div>
+                            </div>
+
+                            <div class="meta-info">
+                                <h4>SEO Meta Information</h4>
+                                <div class="meta-value">
+                                    <strong>Title:</strong> Space Waves Batch 2
+                                    <div class="meta-length">19 characters</div>
+                                </div>
+                                <div class="meta-value">
+                                    <strong>Meta Description:</strong> Oct 27, 2020 ... Space Waves is a farmhouse ale with cherries, lime juice, and lime zest, originally brewed in 2016. For batch 2, we brewed with well water, ...
+                                    <div class="meta-length">160 characters</div>
+                                </div>
+                            </div>
+
+                            
+                                <div class="headings">
+                                    <h4>Heading Structure</h4>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Space Waves Batch 2</span>
+                                        </div>
+                                    
+                                </div>
+                            
+
+                            
+
+                            
+                                <div class="entities">
+                                    
+                                        <span class="entity">collaboration</span>
+                                    
+                                        <span class="entity">Space Waves Batch</span>
+                                    
+                                        <span class="entity">Jolly Pumpkin Artisan Ales</span>
+                                    
+                                        <span class="entity">Space Waves</span>
+                                    
+                                        <span class="entity">farmhouse ale</span>
+                                    
+                                        <span class="entity">cherries</span>
+                                    
+                                        <span class="entity">Jeffrey Stuffings</span>
+                                    
+                                        <span class="entity">batch</span>
+                                    
+                                        <span class="entity">batch</span>
+                                    
+                                        <span class="entity">lime juice</span>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                
+                    <div class="competitor">
+                        <div class="competitor-header">
+                            <span class="rank ">10</span>
+                            <div class="competitor-title">Interview: 'Space Waves' Director Spencer Whiteout — Galaxy Magazine</div>
+                            <div class="competitor-domain">galaxy-mag.com</div>
+                        </div>
+                        <div class="competitor-content">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <div class="metric-value">3,068</div>
+                                    <div class="metric-label">Words</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">68</div>
+                                    <div class="metric-label">Title Length</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">452</div>
+                                    <div class="metric-label">Entities</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">3</div>
+                                    <div class="metric-label">Headings</div>
+                                </div>
+                            </div>
+
+                            <div class="meta-info">
+                                <h4>SEO Meta Information</h4>
+                                <div class="meta-value">
+                                    <strong>Title:</strong> Interview: 'Space Waves' Director Spencer Whiteout — Galaxy Magazine
+                                    <div class="meta-length">68 characters</div>
+                                </div>
+                                <div class="meta-value">
+                                    <strong>Meta Description:</strong> Interview by Yising Kao    In 'Space Waves' directed by Spencer Whiteout, young mischief seekers Marvin and Joey do whatever it takes to catapult their misadventure podcast, Space Waves, to the top of the iTunes charts by the end of the summer. I got to chat with Spencer Whiteout about his independe
+                                    <div class="meta-length">300 characters</div>
+                                </div>
+                            </div>
+
+                            
+                                <div class="headings">
+                                    <h4>Heading Structure</h4>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h1">H1</span>
+                                            <span class="heading-text">Interview: 'Space Waves' Director Spencer Whiteout</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Interview: vaultboy On His New Music, First Headline Tour & More!</span>
+                                        </div>
+                                    
+                                        <div class="heading">
+                                            <span class="heading-tag h2">H2</span>
+                                            <span class="heading-text">Interview: Deion Smith On Playing Kelce On Outer Banks!</span>
+                                        </div>
+                                    
+                                </div>
+                            
+
+                            
+                                <div class="styled-elements">
+                                    <h4>Styled Content Elements</h4>
+                                    
+                                        <div class="styled-group">
+                                            <div class="styled-group-title">Emphasis (&lt;em&gt;) - 1 found</div>
+                                            <div class="styled-items">
+                                                
+                                                    <span class="styled-item emphasis" title="We">We</span>
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                    
+                                        <div class="styled-group">
+                                            <div class="styled-group-title">Strong (&lt;strong&gt;) - 11 found</div>
+                                            <div class="styled-items">
+                                                
+                                                    <span class="styled-item strong" title="Congrats on your new film, Space Waves! It’s an incredible film and has already received positive feedback from the audience. How does it feel to finally finish the project after four years of working on it?">Congrats on your new film, Space Waves! It’s an incredible film and has already received positive feedback from the audience. How does it feel to finally finish the project after four years of working on it?</span>
+                                                
+                                                    <span class="styled-item strong" title="How did you get started with screenwriting and directing?">How did you get started with screenwriting and directing?</span>
+                                                
+                                                    <span class="styled-item strong" title="You’ve mentioned that you used to rent a lot of 80’s DVDs which inspired you to incorporate the 80’s vibes for Space Waves. What are some elements that draw you to 80’s films? What led you to want to make a film about best friends?">You’ve mentioned that you used to rent a lot of 80’s DVDs which inspired you to incorporate the 80’s vibes for Space Waves. What are some elements that draw you to 80’s films? What led you to want to make a film about best friends?</span>
+                                                
+                                                    <span class="styled-item strong" title="There were multiple long takes in Space Waves – what made you want to take this creative direction for those specific scenes?">There were multiple long takes in Space Waves – what made you want to take this creative direction for those specific scenes?</span>
+                                                
+                                                    <span class="styled-item strong" title="What was your favorite part of directing Space Waves?">What was your favorite part of directing Space Waves?</span>
+                                                
+                                                    <span class="styled-item strong" title="The cast and crew faced many challenges while filming, such as the space tower getting destroyed right before shooting on the first day. How did you overcome these challenges to stay on track with the original film plan and not change the whole story?">The cast and crew faced many challenges while filming, such as the space tower getting destroyed right before shooting on the first day. How did you overcome these challenges to stay on track with the original film plan and not change the whole story?</span>
+                                                
+                                                    <span class="styled-item strong" title="Did you visualize anyone specific that you wanted to cast in this film while you were writing it?">Did you visualize anyone specific that you wanted to cast in this film while you were writing it?</span>
+                                                
+                                                    <span class="styled-item strong" title="Space Waves has a bittersweet ending – How do you relate to Marvin’s character and how he gains a better understanding of Joey’s choices?">Space Waves has a bittersweet ending – How do you relate to Marvin’s character and how he gains a better understanding of Joey’s choices?</span>
+                                                
+                                                    <span class="styled-item strong" title="Since Space Waves is all about adventuring with friends, what’s one of your favorite adventures that you’ve had?">Since Space Waves is all about adventuring with friends, what’s one of your favorite adventures that you’ve had?</span>
+                                                
+                                                    <span class="styled-item strong" title="What advice would you like to give to aspiring indie film screenwriters/directors?">What advice would you like to give to aspiring indie film screenwriters/directors?</span>
+                                                
+                                                <span class="styled-item">... +1 more</span>
+                                            </div>
+                                        </div>
+                                    
+                                    
+                                </div>
+                            
+
+                            
+                                <div class="entities">
+                                    
+                                        <span class="entity">Space Waves</span>
+                                    
+                                        <span class="entity">Joey</span>
+                                    
+                                        <span class="entity">part</span>
+                                    
+                                        <span class="entity">premiere</span>
+                                    
+                                        <span class="entity">something</span>
+                                    
+                                        <span class="entity">Marvin</span>
+                                    
+                                        <span class="entity">success</span>
+                                    
+                                        <span class="entity">film</span>
+                                    
+                                        <span class="entity">Spencer Whiteout Mar 31</span>
+                                    
+                                        <span class="entity">Photo</span>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                <div class="section">
+                    <h2>Most Common Entities</h2>
+                    <div class="entities">
+                        
+                            <span class="entity">space waves (0.06)</span>
+                        
+                            <span class="entity">cherries (0.03)</span>
+                        
+                            <span class="entity">players (0.02)</span>
+                        
+                            <span class="entity">batch (0.02)</span>
+                        
+                            <span class="entity">journey (0.02)</span>
+                        
+                            <span class="entity">part (0.01)</span>
+                        
+                            <span class="entity">games (0.01)</span>
+                        
+                            <span class="entity">challenge (0.01)</span>
+                        
+                            <span class="entity">arrow (0.01)</span>
+                        
+                            <span class="entity">premiere (0.01)</span>
+                        
+                    </div>
+                </div>
+            
+
+            
+                <div class="recommendations">
+                    <h3>SEO Recommendations</h3>
+                    
+                        <div class="recommendation">Target content length around 1435 words to match top-ranking competitors.</div>
+                    
+                        <div class="recommendation">Optimize title length to 50-60 characters. Current competitor average is 36 characters.</div>
+                    
+                        <div class="recommendation">Include high-value entities in your content: space waves, cherries, players, batch, journey. These appear frequently in top-ranking pages.</div>
+                    
+                        <div class="recommendation">Maintain positive content tone. Top competitors show consistently positive sentiment (avg: 0.23).</div>
+                    
+                </div>
+            
+        </div>
+
+        <div class="footer">
+            <p>Report generated by SEO Competitor Analysis Tool</p>
+            <p>Analysis ID: 1 | Generated on 7/3/2025</p>
+        </div>
+    </div>
+</body>
+</html>
